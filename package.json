@@ -1,0 +1,29 @@
+{
+  "name": "baseball-rest",
+  "version": "1.0.0",
+  "description": "This is a rest server that connects to a baseball statistics database and serves information.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bknox-atmosol/baseball-rest.git"
+  },
+  "dependencies": {
+    "express" : "4.x.x",
+    "mysql": "2.x.x"
+  },
+  "keywords": [
+    "baseball",
+    "rest",
+    "server",
+    "node"
+  ],
+  "author": "Benjamin Knox",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bknox-atmosol/baseball-rest/issues"
+  },
+  "homepage": "https://github.com/bknox-atmosol/baseball-rest"
+}
