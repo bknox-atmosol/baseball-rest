@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "express" : "4.x.x",
-    "mysql": "2.x.x"
+    "mysql": "2.x.x",
+    "bookshelf": "0.x.x",
+    "knex": "0.x.x",
+    "body-parser": "1.x.x"
   },
   "keywords": [
     "baseball",
