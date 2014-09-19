@@ -1,4 +1,5 @@
-var express = require('express'),
+var _ = require('lodash'),
+    express = require('express'),
     app     = express(),
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
@@ -45,7 +46,22 @@ app.route('/:table')
         });
       })
      .post(function(req,res,next){
-       res.send(req.body);
+        var newCollection = [],
+	    insertCollection = JSON.parse(req.body.collection),
+	    insertColLength = Object.keys(insertCollection).length,
+	    newModel = bookshelf.Model.extend({tableName: req.params.table});
+	_.each(insertCollection, function(model){
+	  delete model['id'];
+          knex(req.params.table).insert(model)
+	    .then(function(data) {
+              newModel.forge({id:data[0]}).fetch().then(function(m) {
+	        newCollection.push(m);
+	        if(newCollection.length == insertColLength) {
+                  res.send(newCollection);
+	        }
+              });
+	    });
+	});
      });
 
 app.route('/:table/:id')
