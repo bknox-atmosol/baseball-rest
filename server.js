@@ -62,7 +62,27 @@ app.route('/:table')
               });
 	    });
 	});
-     });
+     })
+     .put(function(req,res,next){
+        var newCollection = [],
+	    insertCollection = JSON.parse(req.body.collection),
+	    insertColLength = Object.keys(insertCollection).length,
+	    newModel = bookshelf.Model.extend({tableName: req.params.table});
+	_.each(insertCollection, function(model){
+	  if(model.hasOwnProperty('id')) {
+            knex(req.params.table).where('id','=',model.id).update(model)
+  	      .then(function(data) {
+	        console.log(data);
+                newModel.forge({id:data[0]}).fetch().then(function(m) {
+	          newCollection.push(m);
+	          if(newCollection.length == insertColLength) {
+                    res.send(newCollection);
+	          }
+                });
+	      });
+	  }
+	});
+    });
 
 app.route('/:table/:id')
     .get(function(req,res,next){
@@ -83,9 +103,6 @@ app.route('/:table/:id')
           });
         }
       });
-    })
-    .put(function(req,res,next){
-    
     })
     .delete(function(req,res,next) {
       bookshelf.Model.extend({
